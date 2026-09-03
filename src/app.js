@@ -11,7 +11,7 @@ app.use(express.json())
 app.use(cookieparser())
 
 app.use("/api/auth",authRouter)
-app.use("/apit/accounts",accountRouter)
+app.use("/api/accounts",accountRouter)
 
 
 module.exports = app
