@@ -128,7 +128,7 @@ async function createTransaction(req,res){
 async function createInitialFundsTransaction(req,res){
 
     const { toAccount, amount, idempotencyKey } = req.body
-    if(!toAccount || !amount || !fromAccount){
+    if(!toAccount || !amount || !idempotencyKey){
         return res.status(400).json({
             message : "toAccount, amount and idempotencyKey are required"
         })
@@ -147,6 +147,9 @@ async function createInitialFundsTransaction(req,res){
         })
     }
 
+    console.log("req.user =", req.user);
+    console.log("req.user._id =", req.user?._id);
+
     const fromUserAccount = await accountModel.findOne({
         user: req.user._id
     })
@@ -160,11 +163,11 @@ async function createInitialFundsTransaction(req,res){
     const session = await mongoose.startSession()
     session.startTransaction()
 
-    const transaction  = new transactionModel.create({
+    const transaction  = new transactionModel({
         fromAccount : fromUserAccount._id,
         toAccount,
         amount,
-        idenpotencyKey,
+        idempotencyKey,
         status : "PENDING"
     })
 
