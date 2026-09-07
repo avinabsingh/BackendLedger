@@ -12,7 +12,7 @@ app.use(express.json())
 app.use(cookieparser())
 
 app.get("/",(req,res)=>{
-    console.log("Your BackendLedger is up!!!")
+    res.send("Your BackendLedger is up!!!")
 })
 
 app.use("/api/auth",authRouter)
